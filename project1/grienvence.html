@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Grievance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fce4ec, #f48fb1);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4a4a4a;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ff79a5;
+            border-radius: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #d81b60;
+        }
+        .button {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 1.5rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .pink-button {
+            background-color: #ff4081;
+        }
+        .pink-button:hover {
+            background-color: #f50057;
+        }
+        .pink-light-button {
+            background-color: #f06292;
+        }
+        .pink-light-button:hover {
+            background-color: #e91e63;
+        }
+        .green-button {
+            background-color: #4caf50;
+        }
+        .green-button:hover {
+            background-color: #43a047;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: left;
+        }
+        .grievance-item {
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+        .reply-modal-content {
+            text-align: center;
+            font-size: 1rem;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div id="main-container" class="card">
+        <!-- Grievance Form View -->
+        <div id="grievance-form-view" class="p-4">
+            <h1 class="text-2xl font-bold text-pink-700 mb-4 text-center">Submit a Grievance 🌹</h1>
+            <form id="grievance-form">
+                <input type="text" id="grievance-title" placeholder="Title" required>
+                <textarea id="grievance-text" placeholder="What's bothering you?" rows="4" required></textarea>
+
+                <label for="grievance-mood" class="block text-center mb-2 font-semibold">Mood:</label>
+                <select id="grievance-mood" class="mb-4">
+                    <option value="sad">Sad 😔</option>
+                    <option value="angry">Angry 😠</option>
+                    <option value="annoyed">Annoyed 😒</option>
+                    <option value="tired">Tired 😩</option>
+                    <option value="confused">Confused 😕</option>
+                    <option value="stressed">Stressed 😫</option>
+                    <option value="happy">Happy 😄</option>
+                </select>
+
+                <label for="grievance-fix" class="block text-center mb-2 font-semibold">What will fix it:</label>
+                <select id="grievance-fix" class="mb-4">
+                    <option value="uncle_chips">One uncle chips 🍟</option>
+                    <option value="chunky_kitkat">A chunky kitkat would fix this 🍫</option>
+                    <option value="virtual_kiss">A virtual kiss 😘</option>
+                    <option value="offline_meet">A offline meet with me 🤗</option>
+                    <option value="bitching_about_it">Bitching about the problem 😠</option>
+                    <option value="fighting_on_call">Fighting with me on call 😡</option>
+                    <option value="cuddles">A long cuddle session 🫂</option>
+                    <option value="movie_night">A movie night with popcorn 🍿</option>
+                    <option value="tea_chat">A warm cup of chai and a chat ☕</option>
+                    <option value="gaming_session">A gaming session with you 🎮</option>
+                    <option value="long_drive"> a raw sex session  </option>
+                    <option value="other">Other...</option>
+                </select>
+                <textarea id="other-fix" placeholder="Your own solution..." rows="2" class="mb-4" style="display:none;"></textarea>
+
+                <button type="submit" class="button pink-button">Submit 💌</button>
+            </form>
+        </div>
+
+        <!-- Thank You View -->
+        <div id="thankyou-view" class="p-4" style="display: none;">
+            <h1 id="thankyou-message" class="text-2xl font-bold text-center text-pink-700 mb-6">Thank you, Ayushi! 💖</h1>
+            <p class="text-center text-gray-600 mb-8">Your grievance has been sent to Vimal 💌. He will get back to you very soon! (He will think about it)</p>
+            <button id="submit-another-btn" class="button pink-light-button" onclick="window.location.reload();">Submit Another Grievance</button>
+        </div>
+
+        <!-- Section to display grievances and replies -->
+        <div id="grievances-list-ayushi" class="p-4">
+            <h2 class="text-xl font-bold text-pink-700 mb-4 text-center">Your Past Grievances ❤️</h2>
+            <!-- Grievances will be rendered here -->
+        </div>
+
+    </div>
+
+    <!-- Reply Pop-up Modal -->
+    <div id="reply-modal-ayushi" class="modal">
+        <div class="modal-content reply-modal-content">
+            <h3 class="font-bold text-lg text-pink-700 mb-2">Vimal's Reply</h3>
+            <p id="reply-text-ayushi" class="text-sm text-gray-700"></p>
+            <button onclick="document.getElementById('reply-modal-ayushi').style.display = 'none';" class="mt-4 bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-full text-xs">Close</button>
+        </div>
+    </div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, doc, updateDoc, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+        const firebaseConfig = {
+          apiKey: "AIzaSyDyO7eYiw4-ebQqAg57nJ-eFQdE_voYuA8",
+          authDomain: "ayushi-grievance-portal.firebaseapp.com",
+          projectId: "ayushi-grievance-portal",
+          storageBucket: "ayushi-grievance-portal.firebasestorage.app",
+          messagingSenderId: "401147093706",
+          appId: "1:401147093706:web:4b3d24477242afdb630a33"
+        };
+    
+        setLogLevel('debug');
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+    
+        const grievanceForm = document.getElementById('grievance-form');
+        const grievanceFormView = document.getElementById('grievance-form-view');
+        const thankyouView = document.getElementById('thankyou-view');
+        const grievancesListAyushi = document.getElementById('grievances-list-ayushi');
+        const otherFixField = document.getElementById('other-fix');
+        const grievanceFixSelect = document.getElementById('grievance-fix');
+
+        // Show/hide the "Other" text field
+        grievanceFixSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'other') {
+                otherFixField.style.display = 'block';
+                otherFixField.setAttribute('required', 'true');
+            } else {
+                otherFixField.style.display = 'none';
+                otherFixField.removeAttribute('required');
+            }
+        });
+    
+        function showView(view) {
+            grievanceFormView.style.display = 'none';
+            thankyouView.style.display = 'none';
+            grievancesListAyushi.style.display = 'none';
+            view.style.display = 'block';
+        }
+
+        // Fetch and render grievances
+        function fetchAndRenderGrievances() {
+            const grievancesCollectionRef = collection(db, `grievances`);
+            const q = query(grievancesCollectionRef, orderBy('timestamp', 'desc'));
+            onSnapshot(q, (snapshot) => {
+                const grievances = [];
+                snapshot.forEach((doc) => {
+                    grievances.push({ id: doc.id, ...doc.data() });
+                });
+                renderGrievances(grievances);
+            }, (error) => {
+                console.error("Error fetching grievances: ", error);
+            });
+        }
+
+        function renderGrievances(grievances) {
+            grievancesListAyushi.innerHTML = '';
+            if (grievances.length === 0) {
+                grievancesListAyushi.innerHTML = '<p class="text-center text-gray-500">No grievances submitted yet.</p>';
+                return;
+            }
+            grievances.forEach(grievance => {
+                const item = document.createElement('div');
+                item.className = 'grievance-item mb-4';
+                
+                const fixText = grievance.fix === 'other' ? grievance.otherFix : grievance.fix;
+                
+                item.innerHTML = `
+                    <h3 class="font-bold text-lg text-pink-700">${grievance.title}</h3>
+                    <p class="text-sm mt-1 mb-2">${grievance.text}</p>
+                    <p class="text-sm text-gray-600"><strong>Mood:</strong> ${grievance.mood}</p>
+                    <p class="text-sm text-gray-600"><strong>Fix:</strong> ${fixText}</p>
+                    ${grievance.vimalReply ? `<button class="view-reply-btn mt-2 bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full text-xs">View Reply</button>` : ''}
+                `;
+                
+                if (grievance.vimalReply) {
+                    item.querySelector('.view-reply-btn').addEventListener('click', () => {
+                        document.getElementById('reply-text-ayushi').textContent = grievance.vimalReply;
+                        document.getElementById('reply-modal-ayushi').style.display = 'flex';
+                    });
+                }
+                
+                grievancesListAyushi.appendChild(item);
+            });
+        }
+
+        grievanceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const grievanceTitle = document.getElementById('grievance-title').value;
+            const grievanceText = document.getElementById('grievance-text').value;
+            const grievanceMood = document.getElementById('grievance-mood').value;
+            const grievanceFix = document.getElementById('grievance-fix').value;
+            const otherFixText = document.getElementById('other-fix').value;
+    
+            try {
+                const grievancesCollectionRef = collection(db, `grievances`);
+                await addDoc(grievancesCollectionRef, {
+                    title: grievanceTitle,
+                    text: grievanceText,
+                    mood: grievanceMood,
+                    fix: grievanceFix,
+                    otherFix: otherFixText,
+                    vimalReply: null,
+                    timestamp: new Date()
+                });
+    
+                document.getElementById('thankyou-message').textContent = "Thank you, Ayushi! 💖 Your grievance has been sent to Vimal 💌. He will get back to you very soon! (He will think about it)";
+                showView(thankyouView);
+                grievanceForm.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Could not submit grievance. Please try again.");
+            }
+        });
+
+        fetchAndRenderGrievances();
+    </script>
+</body>
+</html>
